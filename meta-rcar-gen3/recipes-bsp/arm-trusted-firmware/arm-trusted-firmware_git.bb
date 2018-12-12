@@ -32,6 +32,7 @@ ATFW_OPT_r8a77965 = "LSI=M3N ${ATFW_OPT_LOSSY}"
 ATFW_OPT_r8a77990 = "LSI=E3 RCAR_SA0_SIZE=0 RCAR_AVS_SETTING_ENABLE=0 RCAR_DRAM_DDR3L_MEMCONF=0 RCAR_DRAM_DDR3L_MEMDUAL=0"
 ATFW_OPT_r8a77995 = "LSI=D3 RCAR_SA0_SIZE=0 RCAR_AVS_SETTING_ENABLE=0 PMIC_ROHM_BD9571=0 RCAR_SYSTEM_SUSPEND=0 DEBUG=0"
 ATFW_OPT_append_ulcb = " RCAR_GEN3_ULCB=1 PMIC_LEVEL_MODE=0"
+ADDITIONAL_ATFW_OPT ??= ""
 
 # IPL build options for H3/E3/H3ULCB
 EXTRA_ATFW_OPT ?= ""
@@ -53,7 +54,7 @@ LD[unexport] = "1"
 
 do_compile() {
     oe_runmake distclean
-    oe_runmake bl2 bl31 rcar_layout_tool rcar_srecord PLAT=${PLATFORM} SPD=opteed MBEDTLS_COMMON_MK=1 ${ATFW_OPT}
+    oe_runmake bl2 bl31 rcar_layout_tool rcar_srecord PLAT=${PLATFORM} SPD=opteed MBEDTLS_COMMON_MK=1 ${ATFW_OPT} ${ADDITIONAL_ATFW_OPT}
 }
 
 # do_install() nothing
@@ -76,7 +77,7 @@ do_deploy() {
 
 do_ipl_opt_compile () {
     oe_runmake distclean
-    oe_runmake bl2 bl31 rcar_layout_tool rcar_srecord PLAT=${PLATFORM} SPD=opteed MBEDTLS_COMMON_MK=1 ${EXTRA_ATFW_OPT} ${ATFW_OPT_LOSSY}
+    oe_runmake bl2 bl31 rcar_layout_tool rcar_srecord PLAT=${PLATFORM} SPD=opteed MBEDTLS_COMMON_MK=1 ${EXTRA_ATFW_OPT} ${ATFW_OPT_LOSSY} ${ADDITIONAL_ATFW_OPT}
 }
 
 do_ipl_opt_deploy () {
