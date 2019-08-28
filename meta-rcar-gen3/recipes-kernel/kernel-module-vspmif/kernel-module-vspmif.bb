@@ -62,6 +62,9 @@ PACKAGES = "\
 
 FILES_${PN} = " \
     /lib/modules/${KERNEL_VERSION}/extra/vspm_if.ko \
+    ${sysconfdir}/modules-load.d \
 "
 
 RPROVIDES_${PN} += "kernel-module-vspmif kernel-module-vspm-if"
+
+KERNEL_MODULE_AUTOLOAD_append = " vspm_if"

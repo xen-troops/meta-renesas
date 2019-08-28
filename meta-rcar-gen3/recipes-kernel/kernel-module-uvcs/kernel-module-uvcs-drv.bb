@@ -68,3 +68,10 @@ PACKAGES = " \
 FILES_${PN}-sstate = " \
     ${includedir}/uvcs_ioctl.h \
 "
+
+FILES_${PN} = " \
+    /lib/modules/${KERNEL_VERSION}/extra/uvcs_drv.ko \
+    ${sysconfdir}/modules-load.d \
+"
+
+KERNEL_MODULE_AUTOLOAD_append = " uvcs_drv"

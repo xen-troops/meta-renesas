@@ -55,6 +55,9 @@ PACKAGES = "\
 
 FILES_${PN} = " \
     /lib/modules/${KERNEL_VERSION}/extra/mmngrbuf.ko \
+    ${sysconfdir}/modules-load.d \
 "
 
 RPROVIDES_${PN} += "kernel-module-mmngrbuf"
+
+KERNEL_MODULE_AUTOLOAD_append = " mmngrbuf"
