@@ -16,6 +16,13 @@ SRCREV = "7638cfbe68760358a4bbad2d12a7b1b93a02e9f5"
 
 PV = "v2.3+renesas+git${SRCPV}"
 
+SRC_URI_append = " \
+   file://0001-Revert-rcar_gen3-plat-Delete-FDT-function-calls.patch \
+   file://0002-rcar_gen3-plat-Fix-DRAM-size-judgment-by-PRR-registe.patch \
+   file://0003-rcar_gen3-plat-Factor-out-DT-memory-node-generation.patch \
+   file://0004-rcar_gen3-plat-Generate-two-memory-nodes-for-larger-.patch \
+"
+
 COMPATIBLE_MACHINE = "(salvator-x|ulcb|ebisu|draak)"
 PLATFORM = "rcar"
 ATFW_OPT_LOSSY = "${@oe.utils.conditional("USE_MULTIMEDIA", "1", "RCAR_LOSSY_ENABLE=1", "", d)}"
