@@ -84,6 +84,10 @@ SRC_URI_append_salvator-x = " \
 
 KERNEL_DEVICETREE_append_salvator-x = "renesas/r8a77951-salvator-xs-xen.dtb"
 
+SRC_URI_append = " \
+    file://0001-dma-mapping-handle-vmalloc-addresses-in-dma_common_-.patch \
+"
+
 do_download_firmware () {
     install -d ${STAGING_KERNEL_DIR}/firmware
     install -m 755 ${WORKDIR}/r8a779x_usb3_v*.dlmem ${STAGING_KERNEL_DIR}/firmware
