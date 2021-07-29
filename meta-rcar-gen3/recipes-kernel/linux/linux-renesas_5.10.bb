@@ -28,6 +28,9 @@ KBUILD_DEFCONFIG = "defconfig"
 SRC_URI_append = " \
     file://touch.cfg \
     ${@oe.utils.conditional("USE_AVB", "1", " file://usb-video-class.cfg", "", d)} \
+    file://add-intc_ex-for-r8a77961.patch \
+    file://cpufreq-boost-for-rcar-5.0.0.rc4.patch \
+    file://0001-arm64-dts-r8a77961-Fix-video-codec-relation-node.patch \
 "
 
 # Add module.lds
