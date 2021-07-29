@@ -78,6 +78,12 @@ SRC_URI_append = " \
     ${@bb.utils.contains('MACHINE_FEATURES', 'usb3', 'file://usb3.cfg', 'file://disable_fw_loader_user_helper.cfg', d)} \
 "
 
+SRC_URI_append_salvator-x = " \
+    file://r8a77951-salvator-xs-xen.dts;subdir=git/arch/${ARCH}/boot/dts/renesas \
+"
+
+KERNEL_DEVICETREE_append_salvator-x = "renesas/r8a77951-salvator-xs-xen.dtb"
+
 do_download_firmware () {
     install -d ${STAGING_KERNEL_DIR}/firmware
     install -m 755 ${WORKDIR}/r8a779x_usb3_v*.dlmem ${STAGING_KERNEL_DIR}/firmware

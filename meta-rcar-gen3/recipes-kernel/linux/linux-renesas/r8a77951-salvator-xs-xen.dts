@@ -1,0 +1,78 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Device Tree Source for the Salvator-X 2nd version board with R-Car H3 ES3.0
+ * running XEN hypervisor
+ *
+ * Copyright (C) 2021 Renesas Electronics Corp.
+ * Copyright (C) 2021 EPAM Systems.
+ */
+
+#include "r8a77951-salvator-xs.dts"
+
+/ {
+	model = "Renesas Salvator-X 2nd version board based on r8a77951, running XEN hypervisor";
+	compatible = "renesas,salvator-xs", "renesas,r8a7795";
+
+	chosen {
+		bootargs = "dom0_mem=2048M console=dtuart dtuart=serial0 dom0_max_vcpus=8 bootscrub=0 loglvl=info hmp-unsafe=true xsm=flask";
+		xen,dom0-bootargs = "root=/dev/nfs nfsroot=192.168.1.100:/srv/salvator-x,vers=3 ip=dhcp rw rootwait console=hvc0 ignore_loglevel clk_ignore_unused";
+		/delete-property/stdout-path;
+		modules {
+			#address-cells = <2>;
+			#size-cells = <2>;
+			module@1 {
+				compatible = "xen,linux-zimage", "xen,multiboot-module";
+				reg = <0x0 0x8a000000 0x0 0x02000000>;
+			};
+			module@2 {
+				compatible = "xen,xsm-policy", "xen,multiboot-module";
+				reg = <0x0 0x8c000000 0x0 0x10000>;
+			};
+		};
+	};
+
+	/*
+	 * When creating DT for the guest domain Xen inserts only dummy CPU nodes.
+	 * And the number of these inserted CPU nodes is equal to the number of
+	 * vCPUs assigned to this domain. All CPU properties which original DT has,
+	 * such as OPP, clock, regulator, etc are not passed to the guest’s DT.
+	 *
+	 * Example of guest vCPU node:
+	 *
+	 * cpu@0 {
+	 *     device_type = "cpu";
+	 *     compatible = "arm,armv8";
+	 *     enable-method = "psci";
+	 *     reg = <0x0>;
+	 * };
+	 *
+	 * This results in the fact that all features expecting a57_x or a53_x
+	 * CPU nodes to be present get broken. This is why we have to explicitly
+	 * remove the following.
+	 */
+	/delete-node/thermal-zones;
+	/delete-node/pmu_a57;
+	/delete-node/pmu_a53;
+};
+
+&ipmmu_vp0 {
+	/*
+	 * The "renesas,ipmmu-mmu-r8a7795" string is known for mmngr driver,
+	 * but is not known for the Xen's IPMMU driver. Overwrite compatible
+	 * string as these IPMMU devices need to be picked up by Xen.
+	 * Even being disabled, they must not get in into the Dom0 DT.
+	 */
+	compatible = "renesas,ipmmu-r8a7795";
+};
+
+&ipmmu_vp1 {
+	compatible = "renesas,ipmmu-r8a7795";
+};
+
+&ipmmu_vc0 {
+	compatible = "renesas,ipmmu-r8a7795";
+};
+
+&ipmmu_vc1 {
+	compatible = "renesas,ipmmu-r8a7795";
+};
