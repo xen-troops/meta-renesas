@@ -21,6 +21,7 @@ SRC_URI_append = " \
    file://0002-rcar_gen3-plat-Fix-DRAM-size-judgment-by-PRR-registe.patch \
    file://0003-rcar_gen3-plat-Factor-out-DT-memory-node-generation.patch \
    file://0004-rcar_gen3-plat-Generate-two-memory-nodes-for-larger-.patch \
+   file://0003-rcar-Add-BOARD_SALVATOR_X-case-in-ddr_rank_judge.patch \
 "
 
 COMPATIBLE_MACHINE = "(salvator-x|ulcb|ebisu|draak)"
