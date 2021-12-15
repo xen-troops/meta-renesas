@@ -70,6 +70,9 @@ PACKAGES = "\
 
 FILES_${PN} = " \
     /lib/modules/${KERNEL_VERSION}/extra/mmngr.ko \
+    ${sysconfdir}/modules-load.d \
 "
 
 RPROVIDES_${PN} += "kernel-module-mmngr"
+
+KERNEL_MODULE_AUTOLOAD_append = " mmngr"
