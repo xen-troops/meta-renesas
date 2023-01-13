@@ -35,6 +35,6 @@ DEPENDS_packagegroup-graphics-renesas-wayland = "libegl"
 
 RDEPENDS:packagegroup-graphics-renesas-wayland = " \
     ${@bb.utils.contains('USE_GLES_WAYLAND', '1', \
-    'libgbm libgbm-dev wayland-kms wayland-wsegl', \
+    'libgbm libgbm-dev wayland-kms', \
     '', d)} \
 "
